@@ -20,7 +20,7 @@ $options = array(
     <div class="awsm-add-on-general-settings-container" >
     <label for="awsm-jobs-enable-auto-delete">
         <input type="checkbox" name="awsm_jobs_auto_remove_applications[enable_auto_delete]" value="enable" <?php checked( $auto_delete_settings['enable_auto_delete'], 'enable', true ); ?> class="awsm-check-toggle-control" id="awsm-jobs-enable-auto-delete" data-toggle="true" data-toggle-target="#awsm_auto_remove_apps">
-        <?php echo esc_html__( 'Enable auto remove applications', 'wp-job-openings' ); ?></label>
+        <?php echo esc_html__( 'Enable auto delete applications', 'wp-job-openings' ); ?></label>
     </div>
     <div id="awsm_auto_remove_apps" class="<?php echo $auto_delete_settings['enable_auto_delete'] && $auto_delete_settings['enable_auto_delete'] === 'enable' ? ' show' : 'awsm-hide'; ?>">
         <br />

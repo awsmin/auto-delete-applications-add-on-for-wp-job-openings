@@ -6,7 +6,7 @@
  */
 
 /**
- * Plugin Name: GDPR Support for WP Job Openings
+ * Plugin Name: Auto Delete Applications - Add-on for WP Job Openings
  * Plugin URI: https://wordpress.org/plugins/wp-job-openings/
  * Description: Custom Add-on of WP Job Openings Plugin providing GDPR Support. This can automatically remove submitted applications / documents after a certain amount of time.
  * Author: AWSM Innovations
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class AWSM_Job_Openings_GDPR_Addon {
+class AWSM_Job_Openings_Auto_Delete_Addon {
 	private static $instance = null;
 
 	public function __construct() {
@@ -65,13 +65,15 @@ class AWSM_Job_Openings_GDPR_Addon {
 		$auto_delete_content = ob_get_clean();
 		$settings_fields['default'][] = 
 			array(
-				'name'          => 'awsm_jobs_auto_remove_applications',
-				'label'         => __( 'Auto remove applications ', 'wp-job-openings' ),
-				'type'          => 'raw',
-				'value'         => $auto_delete_content,
-		);
+				'name'        => 'awsm_jobs_auto_remove_applications',
+				'label'       => __( 'Auto delete applications ', 'wp-job-openings' ),
+				'type'        => 'raw',
+				'value'       => $auto_delete_content,
+				'description' => __( 'CAUTION: Checking this option will permanently delete applications after the selected time period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day on wards automatically).', 'wp-job-openings'),
+			);
 		return $settings_fields;
 	}
+
 	private function settings() {
 		$settings = array(
 			'general'         => array(
@@ -83,6 +85,7 @@ class AWSM_Job_Openings_GDPR_Addon {
 		);
 		return $settings;
 	}
+
 	public function auto_delete_handler( $auto_delete_options ) {
 		$options = array(
 			'enable_auto_delete'  => '',
@@ -99,6 +102,7 @@ class AWSM_Job_Openings_GDPR_Addon {
 		}
 		return $options;
 	}
+
 	public function register_gdpr_settings() {
 		$settings = $this->settings();
 		foreach ( $settings as $group => $settings_args ) {
@@ -154,10 +158,10 @@ class AWSM_Job_Openings_GDPR_Addon {
 	}
 }
 
-$gdpr_addon = AWSM_Job_Openings_GDPR_Addon::init();
+$auto_delete_addon = AWSM_Job_Openings_Auto_Delete_Addon::init();
 
 // activation
-register_activation_hook( __FILE__, array( $gdpr_addon, 'activate' ) );
+register_activation_hook( __FILE__, array( $auto_delete_addon, 'activate' ) );
 
 // deactivation
-register_deactivation_hook( __FILE__, array( $gdpr_addon, 'deactivate' ) );
+register_deactivation_hook( __FILE__, array( $auto_delete_addon, 'deactivate' ) );
