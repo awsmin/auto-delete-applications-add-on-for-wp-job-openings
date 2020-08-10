@@ -60,16 +60,9 @@ class AWSM_Job_Openings_GDPR_Addon {
 	}
 
 	public function awsm_jobs_general_settings_fields( $settings_fields ) {
-
 		ob_start();
 		include $this->cpath . '/inc/remove-applications.php';
 		$auto_delete_content = ob_get_clean();
-		$dura = get_option('awsm_jobs_auto_remove_applications');
-		$count = $auto_delete_settings['count'];
-$pepriod = $auto_delete_settings['period'];
-
-$before = $count.' '. $pepriod.' ago';
-
 		$settings_fields['default'][] = 
 			array(
 				'name'          => 'awsm_jobs_auto_remove_applications',
@@ -93,14 +86,16 @@ $before = $count.' '. $pepriod.' ago';
 	public function auto_delete_handler( $auto_delete_options ) {
 		$options = array(
 			'enable_auto_delete'  => '',
-			'count'   => '',
-			'period'  => '',
+			'count'               => '',
+			'period'              => '',
+			'force_delete'        => '',
 		);
 		
 		if ( ! empty( $auto_delete_options ) && is_array( $auto_delete_options ) ) {
 			$options['enable_auto_delete'] = isset( $auto_delete_options['enable_auto_delete'] ) ? sanitize_text_field( $auto_delete_options['enable_auto_delete'] ) : '';
 			$options['count']              = isset( $auto_delete_options['count'] ) ? sanitize_text_field( $auto_delete_options['count'] ) : '';
 			$options['period']             = isset( $auto_delete_options['period'] ) ? $auto_delete_options['period'] : '';
+			$options['force_delete'] = isset( $auto_delete_options['force_delete'] ) ? sanitize_text_field( $auto_delete_options['force_delete'] ) : '';
 		}
 		return $options;
 	}
@@ -117,8 +112,9 @@ $before = $count.' '. $pepriod.' ago';
 		$auto_delete_settings = get_option( 'awsm_jobs_auto_remove_applications' );
 		$enable_auto_delete   = $auto_delete_settings['enable_auto_delete'];
 		$count                = $auto_delete_settings['count'];
-		$pepriod              = $auto_delete_settings['period'];
-		$before               = $count.' '. $pepriod.' ago';
+		$period               = $auto_delete_settings['period'];
+		$force_delete         = $auto_delete_settings['force_delete'];
+		$before               = $count .' '. $period .' ago';
 		if( $enable_auto_delete === 'enable' ) {
 			$args    = array(
 				'fields'         => 'ids',
@@ -136,7 +132,11 @@ $before = $count.' '. $pepriod.' ago';
 			if ( $query->have_posts() ) {
 				while ( $query->have_posts() ) {
 					$query->the_post();
-					wp_delete_post( get_the_ID(), true );
+					if($force_delete === 'enable' ) {
+						wp_delete_post( get_the_ID(), true );
+					} else {
+						wp_trash_post( get_the_ID() );
+					}
 				}
 			}
 		}
