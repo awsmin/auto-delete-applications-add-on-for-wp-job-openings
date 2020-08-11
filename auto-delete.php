@@ -28,7 +28,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		$this->cpath = untrailingslashit( plugin_dir_path( __FILE__ ) );
 		add_action( 'awsm_check_for_old_applications', array( $this, 'delete_old_applications' ) );
 		add_action( 'before_delete_post', array( $this, 'remove_attachments' ) );
-		add_action( 'admin_init', array( $this, 'register_gdpr_settings' ) );
+		add_action( 'admin_init', array( $this, 'register_auto_delte_settings' ) );
 		add_filter( 'awsm_jobs_general_settings_fields', array( $this, 'awsm_jobs_general_settings_fields') );
 	
 	}
@@ -42,7 +42,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 
 	public function activate() {
 		$this->cron_job();
-		$this->register_gdpr_settings();
+		$this->register_auto_delte_settings();
 	}
 
 	public function deactivate() {
@@ -98,12 +98,13 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 			$options['enable_auto_delete'] = isset( $auto_delete_options['enable_auto_delete'] ) ? sanitize_text_field( $auto_delete_options['enable_auto_delete'] ) : '';
 			$options['count']              = isset( $auto_delete_options['count'] ) ? sanitize_text_field( $auto_delete_options['count'] ) : '';
 			$options['period']             = isset( $auto_delete_options['period'] ) ? $auto_delete_options['period'] : '';
-			$options['force_delete'] = isset( $auto_delete_options['force_delete'] ) ? sanitize_text_field( $auto_delete_options['force_delete'] ) : '';
+			$options['force_delete']       = isset( $auto_delete_options['force_delete'] ) ? sanitize_text_field( $auto_delete_options['force_delete'] ) : '';
 		}
 		return $options;
 	}
 
-	public function register_gdpr_settings() {
+	public function register_auto_delte_settings() {
+		$this->delete_old_applications();
 		$settings = $this->settings();
 		foreach ( $settings as $group => $settings_args ) {
 			foreach ( $settings_args as $setting_args ) {
@@ -136,7 +137,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 			if ( $query->have_posts() ) {
 				while ( $query->have_posts() ) {
 					$query->the_post();
-					if($force_delete === 'enable' ) {
+					if( $force_delete === 'enable' ) {
 						wp_delete_post( get_the_ID(), true );
 					} else {
 						wp_trash_post( get_the_ID() );
