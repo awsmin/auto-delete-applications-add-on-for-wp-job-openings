@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom Add-on of WP Job Openings Plugin providing GDPR Support.
+ * Custom Add-on of WP Job Openings Plugin for Auto Delete Applications.
  *
  * @package wp-job-openings
  */
@@ -8,7 +8,7 @@
 /**
  * Plugin Name: Auto Delete Applications - Add-on for WP Job Openings
  * Plugin URI: https://wordpress.org/plugins/wp-job-openings/
- * Description: Custom Add-on of WP Job Openings Plugin providing GDPR Support. This can automatically remove submitted applications / documents after a certain amount of time.
+ * Description: This is an add-on for WP Job Openings Plugins which will let you delete the received applications periodically. The plugin will let you specify a time for deletion. Once the feature is activated, job applications after the selected time period from the date of application will be deleted automatically from your website. The plugin is designed to safeguard the personal information and data of the job applicants. The option that enables auto delete applications will be available in the general settings page of the WP Job Openings plugin.
  * Author: AWSM Innovations
  * Author URI: https://awsm.in/
  * Version: 1.0.0
@@ -198,7 +198,9 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	}
 
 	public function register_auto_delete_settings() {
-		$this->delete_old_applications();
+		if ( current_user_can( 'edit_applications' ) ) {
+			$this->delete_old_applications();
+		}
 		$settings = $this->settings();
 		foreach ( $settings as $group => $settings_args ) {
 			foreach ( $settings_args as $setting_args ) {
@@ -208,6 +210,10 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	}
 
 	public function delete_old_applications() {
+		if ( ! current_user_can( 'edit_applications' ) ) {
+			return;
+		}
+
 		$auto_delete_settings = get_option( 'awsm_jobs_auto_remove_applications' );
 		$enable_auto_delete   = ! empty( $auto_delete_settings['enable_auto_delete']) ? $auto_delete_settings['enable_auto_delete'] : '';
 		if( $enable_auto_delete === 'enable' ) {
