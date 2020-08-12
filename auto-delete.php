@@ -27,11 +27,7 @@ if ( ! defined( 'AWSM_JOBS_MAIN_PLUGIN' ) ) {
 }
 
 if ( ! defined( 'AWSM_JOBS_MAIN_REQ_VERSION' ) ) {
-	define( 'AWSM_JOBS_MAIN_REQ_VERSION', '1.3' );
-}
-
-if ( ! defined( 'AWSM_JOBS_PLUGIN_VERSION' ) ) {
-	define( 'AWSM_JOBS_PLUGIN_VERSION', '2.0.0' );
+	define( 'AWSM_JOBS_MAIN_REQ_VERSION', '1.4' );
 }
 
 if ( ! defined( 'AWSM_JOBS_PRO_PLUGIN_BASENAME' ) ) {
@@ -44,7 +40,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	public function __construct() {
 		$this->cpath = untrailingslashit( plugin_dir_path( __FILE__ ) );
 		add_action( 'admin_init', array( $this, 'handle_plugin_activation_add_on' ) );
-		add_action( 'awsm_check_for_old_applications', array( $this, 'delete_old_applications' ) );
+		add_action( 'awsm_check_for_old_applications', array( $this, 'handle_old_applications' ) );
 		add_action( 'before_delete_post', array( $this, 'remove_attachments' ) );
 		add_action( 'admin_init', array( $this, 'register_auto_delete_settings' ) );
 		add_filter( 'awsm_jobs_general_settings_fields', array( $this, 'awsm_jobs_general_settings_fields') );
@@ -189,18 +185,49 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		);
 		
 		if ( ! empty( $auto_delete_options ) && is_array( $auto_delete_options ) ) {
-			$options['enable_auto_delete'] = isset( $auto_delete_options['enable_auto_delete'] ) ? sanitize_text_field( $auto_delete_options['enable_auto_delete'] ) : '';
-			$options['count']              = isset( $auto_delete_options['count'] ) ? sanitize_text_field( $auto_delete_options['count'] ) : '';
-			$options['period']             = isset( $auto_delete_options['period'] ) ? $auto_delete_options['period'] : '';
-			$options['force_delete']       = isset( $auto_delete_options['force_delete'] ) ? sanitize_text_field( $auto_delete_options['force_delete'] ) : '';
+				$options['enable_auto_delete'] = isset( $auto_delete_options['enable_auto_delete'] ) ? sanitize_text_field( $auto_delete_options['enable_auto_delete'] ) : '';
+				$options['count']              = isset( $auto_delete_options['count'] ) ? sanitize_text_field( $auto_delete_options['count'] ) : '';
+				$options['period']             = isset( $auto_delete_options['period'] ) ? $auto_delete_options['period'] : '';
+				$options['force_delete']       = isset( $auto_delete_options['force_delete'] ) ? sanitize_text_field( $auto_delete_options['force_delete'] ) : '';
+				
+				if ( current_user_can( 'delete_applications' ) ) {
+					$this->delete_applications( $options );
+				}
 		}
 		return $options;
 	}
 
-	public function register_auto_delete_settings() {
-		if ( current_user_can( 'edit_applications' ) ) {
-			$this->delete_old_applications();
+	public function delete_applications( $options ) {
+		$count                = $options['count'];
+		$period               = $options['period'];
+		$force_delete         = $options['force_delete'];
+		$before               = $count .' '. $period .' ago';
+		$args    = array(
+			'fields'         => 'ids',
+			'post_type'      => 'awsm_job_application',
+			'post_status'    => array( 'publish', 'private', 'trash', 'progress', 'shortlist', 'reject', 'select' ),
+			'posts_per_page' => -1,
+			'date_query'     => array(
+				array(
+					'column' => 'post_date_gmt',
+					'before' => $before,
+				),
+			),
+		);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) {
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				if( $force_delete === 'enable' ) {
+					wp_delete_post( get_the_ID(), true );
+				} else {
+					wp_trash_post( get_the_ID() );
+				}
+			}
 		}
+	}
+
+	public function register_auto_delete_settings() {
 		$settings = $this->settings();
 		foreach ( $settings as $group => $settings_args ) {
 			foreach ( $settings_args as $setting_args ) {
@@ -209,41 +236,11 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		}
 	}
 
-	public function delete_old_applications() {
-		if ( ! current_user_can( 'edit_applications' ) ) {
-			return;
-		}
-
-		$auto_delete_settings = get_option( 'awsm_jobs_auto_remove_applications' );
-		$enable_auto_delete   = ! empty( $auto_delete_settings['enable_auto_delete']) ? $auto_delete_settings['enable_auto_delete'] : '';
+	public function handle_old_applications() {
+		$options              = get_option( 'awsm_jobs_auto_remove_applications' );
+		$enable_auto_delete   = ! empty( $options['enable_auto_delete']) ? $options['enable_auto_delete'] : '';
 		if( $enable_auto_delete === 'enable' ) {
-		$count                = $auto_delete_settings['count'];
-		$period               = $auto_delete_settings['period'];
-		$force_delete         = $auto_delete_settings['force_delete'];
-		$before               = $count .' '. $period .' ago';
-			$args    = array(
-				'fields'         => 'ids',
-				'post_type'      => 'awsm_job_application',
-				'post_status'    => array( 'publish', 'private', 'trash', 'progress', 'shortlist', 'reject', 'select' ),
-				'posts_per_page' => -1,
-				'date_query'     => array(
-					array(
-						'column' => 'post_date_gmt',
-						'before' => $before,
-					),
-				),
-			);
-			$query = new WP_Query( $args );
-			if ( $query->have_posts() ) {
-				while ( $query->have_posts() ) {
-					$query->the_post();
-					if( $force_delete === 'enable' ) {
-						wp_delete_post( get_the_ID(), true );
-					} else {
-						wp_trash_post( get_the_ID() );
-					}
-				}
-			}
+			$this->delete_applications( $options );
 		}
 	}
 
