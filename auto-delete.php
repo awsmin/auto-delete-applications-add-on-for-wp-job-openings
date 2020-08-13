@@ -41,10 +41,13 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 
 	public function __construct() {
 		$this->cpath = untrailingslashit( plugin_dir_path( __FILE__ ) );
+		add_action( 'init', array( $this, 'cron_jobs' ) );
 		add_action( 'admin_init', array( $this, 'handle_plugin_activation_add_on' ) );
-		add_action( 'awsm_check_for_old_applications', array( $this, 'handle_old_applications' ) );
+		add_action( 'awsm_jobs_adl_applications', array( $this, 'handle_old_applications' ) );
 		add_action( 'before_delete_post', array( $this, 'remove_attachments' ) );
-		add_action( 'admin_init', array( $this, 'register_auto_delete_settings' ) );
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'update_option_awsm_jobs_adl_general_settings', array( $this, 'update_awsm_jobs_adl_general_settings' ), 10, 2 );
+
 		add_filter( 'awsm_jobs_general_settings_fields', array( $this, 'awsm_jobs_general_settings_fields' ) );
 	}
 
@@ -56,22 +59,22 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	}
 
 	public function activate() {
-		$this->cron_job();
-		$this->register_auto_delete_settings();
+		$this->register_default_settings();
 	}
 
 	public function deactivate() {
 		$this->clear_cron_jobs();
 	}
 
-	public function cron_job() {
-		if ( ! wp_next_scheduled( 'awsm_check_for_old_applications' ) ) {
-			wp_schedule_event( time(), 'daily', 'awsm_check_for_old_applications' );
+	public function cron_jobs() {
+		$settings = self::get_general_settings();
+		if ( $settings['enable_auto_delete'] === 'enable' && ! wp_next_scheduled( 'awsm_jobs_adl_applications' ) ) {
+			wp_schedule_event( time(), 'daily', 'awsm_jobs_adl_applications' );
 		}
 	}
 
 	public function clear_cron_jobs() {
-		wp_clear_scheduled_hook( 'awsm_check_for_old_applications' );
+		wp_clear_scheduled_hook( 'awsm_jobs_adl_applications' );
 	}
 
 	public function handle_plugin_activation_add_on() {
@@ -154,14 +157,15 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	public function awsm_jobs_general_settings_fields( $settings_fields ) {
 		ob_start();
 		include $this->cpath . '/inc/remove-applications.php';
-		$auto_delete_content          = ob_get_clean();
+		$field_content = ob_get_clean();
+
 		$settings_fields['default'][] =
 			array(
-				'name'        => 'awsm_jobs_auto_remove_applications',
+				'name'        => 'awsm_jobs_adl_general_settings',
 				'label'       => __( 'Auto delete applications ', 'auto-delete-wp-job-openings' ),
 				'type'        => 'raw',
-				'value'       => $auto_delete_content,
-				'description' => __( 'CAUTION: Checking this option will permanently delete applications after the selected time period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day on wards automatically).', 'auto-delete-wp-job-openings' ),
+				'value'       => $field_content,
+				'description' => __( 'CAUTION: Checking this option will delete applications after the selected time period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day on wards automatically).', 'auto-delete-wp-job-openings' ),
 			);
 		return $settings_fields;
 	}
@@ -170,12 +174,67 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		$settings = array(
 			'general' => array(
 				array(
-					'option_name' => 'awsm_jobs_auto_remove_applications',
+					'option_name' => 'awsm_jobs_adl_general_settings',
 					'callback'    => array( $this, 'auto_delete_handler' ),
 				),
 			),
 		);
 		return $settings;
+	}
+
+	public static function get_default_general_settings() {
+		return array(
+			'enable_auto_delete' => '',
+			'count'              => '6',
+			'period'             => 'months',
+			'force_delete'       => '',
+		);
+	}
+
+	public static function get_general_settings() {
+		$settings = get_option( 'awsm_jobs_adl_general_settings' );
+		if ( ! is_array( $settings ) ) {
+			$settings = array();
+		}
+		$defaults = self::get_default_general_settings();
+		$settings = wp_parse_args( $settings, $defaults );
+		return $settings;
+	}
+
+	private static function default_settings() {
+		$options = array(
+			'awsm_jobs_adl_general_settings' => self::get_default_general_settings(),
+		);
+		if ( ! empty( $options ) ) {
+			foreach ( $options as $option => $value ) {
+				if ( ! get_option( $option ) ) {
+					update_option( $option, $value );
+				}
+			}
+		}
+	}
+
+	private function register_default_settings() {
+		if ( intval( get_option( 'awsm_jobs_adl_register_default_settings' ) ) === 1 ) {
+			return;
+		}
+		self::default_settings();
+		update_option( 'awsm_jobs_adl_register_default_settings', 1 );
+	}
+
+	public function register_settings() {
+		$settings = $this->settings();
+		foreach ( $settings as $group => $settings_args ) {
+			foreach ( $settings_args as $setting_args ) {
+				register_setting( 'awsm-jobs-' . $group . '-settings', $setting_args['option_name'], isset( $setting_args['callback'] ) ? $setting_args['callback'] : 'sanitize_text_field' );
+			}
+		}
+	}
+
+	public function update_awsm_jobs_adl_general_settings( $old_value, $value ) {
+		if ( ! is_array( $value ) || $value['enable_auto_delete'] !== 'enable' ) {
+			$this->clear_cron_jobs();
+		}
 	}
 
 	public function auto_delete_handler( $auto_delete_options ) {
@@ -229,19 +288,9 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		}
 	}
 
-	public function register_auto_delete_settings() {
-		$settings = $this->settings();
-		foreach ( $settings as $group => $settings_args ) {
-			foreach ( $settings_args as $setting_args ) {
-				register_setting( 'awsm-jobs-' . $group . '-settings', $setting_args['option_name'], isset( $setting_args['callback'] ) ? $setting_args['callback'] : 'sanitize_text_field' );
-			}
-		}
-	}
-
 	public function handle_old_applications() {
-		$options            = get_option( 'awsm_jobs_auto_remove_applications' );
-		$enable_auto_delete = ! empty( $options['enable_auto_delete'] ) ? $options['enable_auto_delete'] : '';
-		if ( $enable_auto_delete === 'enable' ) {
+		$options = self::get_general_settings();
+		if ( $options['enable_auto_delete'] === 'enable' ) {
 			$this->delete_applications( $options );
 		}
 	}
