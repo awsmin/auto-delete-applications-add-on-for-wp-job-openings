@@ -1,19 +1,21 @@
 <?php
 /**
- * Custom Add-on of WP Job Openings Plugin for Auto Delete Applications.
+ * Add-on for WP Job Openings for automatically deleting applications based on the specified time.
  *
  * @package wp-job-openings
  */
 
 /**
  * Plugin Name: Auto Delete Applications - Add-on for WP Job Openings
- * Plugin URI: https://wordpress.org/plugins/wp-job-openings/
- * Description: This is an add-on for WP Job Openings Plugins which will let you delete the received applications periodically. The plugin will let you specify a time for deletion. Once the feature is activated, job applications after the selected time period from the date of application will be deleted automatically from your website. The plugin is designed to safeguard the personal information and data of the job applicants. The option that enables auto delete applications will be available in the general settings page of the WP Job Openings plugin.
+ * Plugin URI: https://wpjobopenings.com/
+ * Description: This is an add-on for WP Job Openings Plugins, which will let you delete the received applications periodically.
  * Author: AWSM Innovations
  * Author URI: https://awsm.in/
  * Version: 1.0.0
- * Licence: GPLv2
+ * License: GPLv2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text domain: auto-delete-wp-job-openings
+ * Domain Path: /languages
  */
 
 // Exit if accessed directly
@@ -153,7 +155,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		ob_start();
 		include $this->cpath . '/inc/remove-applications.php';
 		$auto_delete_content = ob_get_clean();
-		$settings_fields['default'][] = 
+		$settings_fields['default'][] =
 			array(
 				'name'        => 'awsm_jobs_auto_remove_applications',
 				'label'       => __( 'Auto delete applications ', 'wp-job-openings' ),
@@ -183,13 +185,13 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 			'period'              => '',
 			'force_delete'        => '',
 		);
-		
+
 		if ( ! empty( $auto_delete_options ) && is_array( $auto_delete_options ) ) {
 				$options['enable_auto_delete'] = isset( $auto_delete_options['enable_auto_delete'] ) ? sanitize_text_field( $auto_delete_options['enable_auto_delete'] ) : '';
 				$options['count']              = isset( $auto_delete_options['count'] ) ? sanitize_text_field( $auto_delete_options['count'] ) : '';
 				$options['period']             = isset( $auto_delete_options['period'] ) ? $auto_delete_options['period'] : '';
 				$options['force_delete']       = isset( $auto_delete_options['force_delete'] ) ? sanitize_text_field( $auto_delete_options['force_delete'] ) : '';
-				
+
 				if ( current_user_can( 'delete_applications' ) ) {
 					$this->delete_applications( $options );
 				}
