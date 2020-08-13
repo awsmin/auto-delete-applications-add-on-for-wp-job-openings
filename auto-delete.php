@@ -104,7 +104,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 
 		if ( ! $is_update ) {
 			// when plugin is not active.
-			$link_action = esc_html__( 'Activate', 'wp-job-openings' );
+			$link_action = esc_html__( 'Activate', 'auto-delete-wp-job-openings' );
 			$action_url  = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . AWSM_JOBS_MAIN_PLUGIN ), 'activate-plugin_' . AWSM_JOBS_MAIN_PLUGIN );
 			$link_class  = ' activate-now';
 
@@ -114,14 +114,14 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 			$installed_plugin = get_plugins( '/' . $plugin_slug );
 			if ( empty( $installed_plugin ) ) {
 				if ( get_filesystem_method( array(), WP_PLUGIN_DIR ) === 'direct' ) {
-					$link_action = esc_html__( 'Install', 'wp-job-openings' );
+					$link_action = esc_html__( 'Install', 'auto-delete-wp-job-openings' );
 					$action_url  = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=' . $plugin_slug ), 'install-plugin_' . $plugin_slug );
 					$link_class  = ' install-now';
 				}
 			}
 		} else {
 			// when plugin needs an update.
-			$link_action = esc_html__( 'Update', 'wp-job-openings' );
+			$link_action = esc_html__( 'Update', 'auto-delete-wp-job-openings' );
 			$action_url  = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' . AWSM_JOBS_MAIN_PLUGIN ), 'upgrade-plugin_' . AWSM_JOBS_MAIN_PLUGIN );
 			$link_class  = ' update-now';
 		}
@@ -137,13 +137,13 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 				<p>
 					<?php
 						$req_plugin = sprintf( '<strong>"%s"</strong>', esc_html__( 'WP Job Openings', 'wp-job-openings' ) );
-						$plugin     = sprintf( '<strong>"%s"</strong>', esc_html__( 'Auto Delete Applications - Add-on for WP Job Openings', 'wp-job-openings' ) );
+						$plugin     = sprintf( '<strong>"%s"</strong>', esc_html__( 'Auto Delete Applications - Add-on for WP Job Openings', 'auto-delete-wp-job-openings' ) );
 					if ( $is_default ) {
 						/* translators: %1$s: main plugin, %2$s: current plugin, %3$s: plugin activation link, %4$s: line break */
-						printf( esc_html__( 'The plugin %2$s needs the plugin %1$s active. %4$s Please %3$s %1$s', 'wp-job-openings' ), $req_plugin, $plugin, $this->get_main_plugin_activation_link(), '<br />' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						printf( esc_html__( 'The plugin %2$s needs the plugin %1$s active. %4$s Please %3$s %1$s', 'auto-delete-wp-job-openings' ), $req_plugin, $plugin, $this->get_main_plugin_activation_link(), '<br />' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					} else {
 						/* translators: %1$s: main plugin, %2$s: current plugin, %3$s: minimum required version of the main plugin, %4$s: plugin updation link */
-						printf( esc_html__( '%2$s plugin requires %1$s version %3$s. Please %4$s %1$s plugin to the latest version.', 'wp-job-openings' ), $req_plugin, $plugin, esc_html( $req_plugin_version ), $this->get_main_plugin_activation_link( true ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						printf( esc_html__( '%2$s plugin requires %1$s version %3$s. Please %4$s %1$s plugin to the latest version.', 'auto-delete-wp-job-openings' ), $req_plugin, $plugin, esc_html( $req_plugin_version ), $this->get_main_plugin_activation_link( true ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					?>
 				</p>
@@ -158,10 +158,10 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		$settings_fields['default'][] =
 			array(
 				'name'        => 'awsm_jobs_auto_remove_applications',
-				'label'       => __( 'Auto delete applications ', 'wp-job-openings' ),
+				'label'       => __( 'Auto delete applications ', 'auto-delete-wp-job-openings' ),
 				'type'        => 'raw',
 				'value'       => $auto_delete_content,
-				'description' => __( 'CAUTION: Checking this option will permanently delete applications after the selected time period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day on wards automatically).', 'wp-job-openings' ),
+				'description' => __( 'CAUTION: Checking this option will permanently delete applications after the selected time period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day on wards automatically).', 'auto-delete-wp-job-openings' ),
 			);
 		return $settings_fields;
 	}
