@@ -8,7 +8,7 @@
 /**
  * Plugin Name: Auto Delete Applications - Add-on for WP Job Openings
  * Plugin URI: https://wpjobopenings.com/
- * Description: This is an add-on for WP Job Openings Plugins, which will let you delete the received applications periodically.
+ * Description: This is an add-on for WP Job Openings Plugin, which will let you delete the received applications periodically.
  * Author: AWSM Innovations
  * Author URI: https://awsm.in/
  * Version: 1.0.0
