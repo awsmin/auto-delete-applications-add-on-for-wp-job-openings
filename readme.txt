@@ -2,7 +2,7 @@
 Contributors: awsmin
 Tags: jobs, job listing, job openings, job board, careers page, jobs page, wp job opening, jobs plugin
 Requires at least: 4.5
-Tested up to: 5.4.1
+Tested up to: 5.5
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -11,25 +11,25 @@ Donate link: https://www.buymeacoffee.com/awsm
 
 == Summary ==
 
-This is essentially an add-on for WP Job Openings plugin. It will auto delete all applications and its related information (for example resume, other files from WP Job Openings Pro) and keep only the needed info up to a certain period specified based on the plugin settings.
+This is essentially an add-on for WP Job Openings plugin. It will auto-delete all applications and related information (for example, resume, other files from WP Job Openings Pro) and keep only the needed info up to a certain period based on the plugin settings.
 
 == Description ==
-This is an add-on for WP Job Openings Plugins which will let you delete the received applications periodically. The plugin will let you specify a time for deletion. Once the feature is activated, job applications after the selected time period from the date of application will be deleted automatically from your website. 
+This is an add-on for WP Job Openings Plugin, which will let you delete the received applications periodically. The plugin will let you specify a time for deletion. Once the feature is activated, job applications after the selected time period from the date of application will be deleted automatically from your website.
 
-The plugin is designed to safeguard the personal information and data of the job applicants. The option that enables auto delete applications will be available in the general settings page of the WP Job Openings plugin. 
+The plugin is designed to safeguard the personal information and data of the job applicants. The option that enables auto delete applications will be available in the WP Job Openings plugin's general settings page.
 
 Requires:
 
 * [WP Job Openings](https://wordpress.org/plugins/wp-job-openings/) 1.4+
 
-**[View Demo](https://demo.awsm.in/wp-job-openings/)**
+**[WP Job Openings Demo](https://demo.awsm.in/wp-job-openings/)**
 
 **[Visit website - wpjobopenings.com](https://wpjobopenings.com/)**
 
 
 = Key Features =
 
-* This add-on will help website admins to stick on to the GDPR law where websites are required to delete the user’s or visitor’s personal data within six months. 
+* This add-on will help website admins to stick on to the GDPR law where websites are required to delete the user’s or visitor’s personal data within six months.
 * Option to choose the time period for keeping the applications.
 
 = Other Add-ons =
@@ -43,11 +43,11 @@ Requires:
 
 == Changelog ==
 
-= V 1.0.0 - 2020-08-13 =
+= V 1.0.0 - 2020-08-14 =
 * Initial Release
 
 == Upgrade Notice ==
 
-= 1.0 =
+= 1.0.0 =
 Initial Release
 
