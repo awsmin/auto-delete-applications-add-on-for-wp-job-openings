@@ -28,12 +28,12 @@ if ( ! defined( 'AWSM_JOBS_MAIN_PLUGIN' ) ) {
 	define( 'AWSM_JOBS_MAIN_PLUGIN', 'wp-job-openings/wp-job-openings.php' );
 }
 
-if ( ! defined( 'AWSM_JOBS_MAIN_REQ_VERSION' ) ) {
-	define( 'AWSM_JOBS_MAIN_REQ_VERSION', '1.4' );
+if ( ! defined( 'AWSM_JOBS_ADL_MAIN_REQ_VERSION' ) ) {
+	define( 'AWSM_JOBS_ADL_MAIN_REQ_VERSION', '1.4' );
 }
 
-if ( ! defined( 'AWSM_JOBS_PRO_PLUGIN_BASENAME' ) ) {
-	define( 'AWSM_JOBS_PRO_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+if ( ! defined( 'AWSM_JOBS_ADL_PLUGIN_BASENAME' ) ) {
+	define( 'AWSM_JOBS_ADL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 }
 
 class AWSM_Job_Openings_Auto_Delete_Addon {
@@ -42,7 +42,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	public function __construct() {
 		$this->cpath = untrailingslashit( plugin_dir_path( __FILE__ ) );
 		add_action( 'init', array( $this, 'cron_jobs' ) );
-		add_action( 'admin_init', array( $this, 'handle_plugin_activation_add_on' ) );
+		add_action( 'admin_init', array( $this, 'handle_plugin_activation' ) );
 		add_action( 'awsm_jobs_adl_applications', array( $this, 'handle_old_applications' ) );
 		add_action( 'before_delete_post', array( $this, 'remove_attachments' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
@@ -77,7 +77,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		wp_clear_scheduled_hook( 'awsm_jobs_adl_applications' );
 	}
 
-	public function handle_plugin_activation_add_on() {
+	public function handle_plugin_activation() {
 		include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		if ( is_plugin_inactive( AWSM_JOBS_MAIN_PLUGIN ) || ! class_exists( 'AWSM_Job_Openings' ) ) {
 			add_action(
@@ -86,18 +86,18 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 					$this->admin_notices();
 				}
 			);
-			deactivate_plugins( AWSM_JOBS_PRO_PLUGIN_BASENAME );
+			deactivate_plugins( AWSM_JOBS_ADL_PLUGIN_BASENAME );
 		}
 
 		if ( defined( 'AWSM_JOBS_PLUGIN_VERSION' ) ) {
-			if ( version_compare( AWSM_JOBS_PLUGIN_VERSION, AWSM_JOBS_MAIN_REQ_VERSION, '<' ) ) {
+			if ( version_compare( AWSM_JOBS_PLUGIN_VERSION, AWSM_JOBS_ADL_MAIN_REQ_VERSION, '<' ) ) {
 				add_action(
 					'admin_notices',
 					function() {
 						$this->admin_notices( false );
 					}
 				);
-				deactivate_plugins( AWSM_JOBS_PRO_PLUGIN_BASENAME );
+				deactivate_plugins( AWSM_JOBS_ADL_PLUGIN_BASENAME );
 			}
 		}
 	}
@@ -135,7 +135,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		return $content;
 	}
 
-	public function admin_notices( $is_default = true, $req_plugin_version = AWSM_JOBS_MAIN_REQ_VERSION ) { ?>
+	public function admin_notices( $is_default = true, $req_plugin_version = AWSM_JOBS_ADL_MAIN_REQ_VERSION ) { ?>
 		<div class="updated error">
 				<p>
 					<?php
