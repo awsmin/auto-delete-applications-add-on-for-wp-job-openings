@@ -1,0 +1,18 @@
+{
+	"Auto Delete: Translation": {
+		"scope": "php",
+		"prefix": "job:adl:_",
+		"body": [
+			"__( '$1', 'auto-delete-wp-job-openings' )"
+		],
+		"description": "Translation function"
+	},
+	"Auto Delete: Translation Extended": {
+		"scope": "php",
+		"prefix": "job:adl:__",
+		"body": [
+			"esc_$1__( '$2', 'auto-delete-wp-job-openings' )"
+		],
+		"description": "Translation function extended"
+	},
+}
