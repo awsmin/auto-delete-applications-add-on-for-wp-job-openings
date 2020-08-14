@@ -46,7 +46,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		add_action( 'awsm_jobs_adl_applications', array( $this, 'handle_old_applications' ) );
 		add_action( 'before_delete_post', array( $this, 'remove_attachments' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'update_option_awsm_jobs_adl_general_settings', array( $this, 'update_awsm_jobs_adl_general_settings' ), 10, 2 );
+		add_action( 'update_option_awsm_jobs_adl_general_settings', array( $this, 'update_awsm_jobs_adl_general_settings' ) );
 
 		add_filter( 'awsm_jobs_general_settings_fields', array( $this, 'awsm_jobs_general_settings_fields' ) );
 	}
@@ -69,7 +69,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	public function cron_jobs() {
 		$settings = self::get_general_settings();
 		if ( $settings['enable_auto_delete'] === 'enable' && ! wp_next_scheduled( 'awsm_jobs_adl_applications' ) ) {
-			wp_schedule_event( time(), 'daily', 'awsm_jobs_adl_applications' );
+			wp_schedule_event( time() + DAY_IN_SECONDS, 'daily', 'awsm_jobs_adl_applications' );
 		}
 	}
 
@@ -231,10 +231,8 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		}
 	}
 
-	public function update_awsm_jobs_adl_general_settings( $old_value, $value ) {
-		if ( ! is_array( $value ) || $value['enable_auto_delete'] !== 'enable' ) {
-			$this->clear_cron_jobs();
-		}
+	public function update_awsm_jobs_adl_general_settings() {
+		$this->clear_cron_jobs();
 	}
 
 	public function auto_delete_handler( $adl_options ) {
