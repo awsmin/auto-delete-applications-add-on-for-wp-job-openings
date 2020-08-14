@@ -237,49 +237,47 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		}
 	}
 
-	public function auto_delete_handler( $auto_delete_options ) {
-		$options = array(
-			'enable_auto_delete' => '',
-			'count'              => '',
-			'period'             => '',
-			'force_delete'       => '',
-		);
+	public function auto_delete_handler( $adl_options ) {
+		if ( ! is_array( $adl_options ) ) {
+			$adl_options = array();
+		}
+		$adl_options = wp_parse_args( $adl_options, self::get_default_general_settings() );
 
-		if ( ! empty( $auto_delete_options ) && is_array( $auto_delete_options ) ) {
-				$options['enable_auto_delete'] = isset( $auto_delete_options['enable_auto_delete'] ) ? sanitize_text_field( $auto_delete_options['enable_auto_delete'] ) : '';
-				$options['count']              = isset( $auto_delete_options['count'] ) ? sanitize_text_field( $auto_delete_options['count'] ) : '';
-				$options['period']             = isset( $auto_delete_options['period'] ) ? $auto_delete_options['period'] : '';
-				$options['force_delete']       = isset( $auto_delete_options['force_delete'] ) ? sanitize_text_field( $auto_delete_options['force_delete'] ) : '';
+		$options['enable_auto_delete'] = sanitize_text_field( $adl_options['enable_auto_delete'] );
+		$options['count']              = absint( $adl_options['count'] );
+		$options['period']             = sanitize_text_field( $adl_options['period'] );
+		$options['force_delete']       = sanitize_text_field( $adl_options['force_delete'] );
 
-			if ( current_user_can( 'delete_applications' ) ) {
-				$this->delete_applications( $options );
-			}
+		if ( ! $options['count'] ) {
+			$options['enable_auto_delete'] = '';
+		}
+
+		if ( $options['enable_auto_delete'] === 'enable' && current_user_can( 'delete_others_applications' ) ) {
+			$this->delete_applications( $options );
 		}
 		return $options;
 	}
 
 	public function delete_applications( $options ) {
-		$count        = $options['count'];
-		$period       = $options['period'];
-		$force_delete = $options['force_delete'];
-		$before       = $count . ' ' . $period . ' ago';
-		$args         = array(
+		$args = apply_filters( 'awsm_jobs_adl_query_args', array(
 			'fields'         => 'ids',
-			'post_type'      => 'awsm_job_application',
 			'post_status'    => array( 'publish', 'private', 'trash', 'progress', 'shortlist', 'reject', 'select' ),
 			'posts_per_page' => -1,
 			'date_query'     => array(
 				array(
 					'column' => 'post_date_gmt',
-					'before' => $before,
+					'before' => sanitize_text_field( $options['count'] . ' ' . $options['period'] . ' ago' ),
 				),
 			),
-		);
-		$query        = new WP_Query( $args );
+		) );
+
+		$args['post_type'] = 'awsm_job_application';
+
+		$query = new WP_Query( $args );
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
-				if ( $force_delete === 'enable' ) {
+				if ( $options['force_delete'] === 'enable' ) {
 					wp_delete_post( get_the_ID(), true );
 				} else {
 					wp_trash_post( get_the_ID() );
