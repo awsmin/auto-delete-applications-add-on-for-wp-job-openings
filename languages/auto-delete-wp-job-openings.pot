@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-14T14:57:04+00:00\n"
+"POT-Creation-Date: 2020-08-28T17:05:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: auto-delete-wp-job-openings\n"
@@ -70,11 +70,11 @@ msgid "Day(s)"
 msgstr ""
 
 #: inc/remove-applications.php:6
-msgid "Months(s)"
+msgid "Month(s)"
 msgstr ""
 
 #: inc/remove-applications.php:7
-msgid "Years(s)"
+msgid "Year(s)"
 msgstr ""
 
 #: inc/remove-applications.php:15
