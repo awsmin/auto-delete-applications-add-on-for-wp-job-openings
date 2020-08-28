@@ -43,7 +43,7 @@ Requires:
 
 == Changelog ==
 
-= V 1.0.0 - 2020-08-14 =
+= V 1.0.0 - 2020-08-28 =
 * Initial Release
 
 == Upgrade Notice ==
