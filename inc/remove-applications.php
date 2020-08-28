@@ -21,7 +21,7 @@ $options = array(
 				<li>
 					<label for="">
 					<?php echo esc_html__( 'After', 'auto-delete-wp-job-openings' ); ?>
-						<input type="text" class="small-text" name="awsm_jobs_adl_general_settings[count]" value="<?php echo esc_attr( $adl_settings['count'] ); ?>" id="" class="" data-toggle-target="">
+						<input type="number" class="small-text" name="awsm_jobs_adl_general_settings[count]" min="1" value="<?php echo esc_attr( $adl_settings['count'] ); ?>" style="margin-top: 0;">
 					</label>
 				</li>
 				<li>
