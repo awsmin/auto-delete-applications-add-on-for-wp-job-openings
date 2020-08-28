@@ -3,8 +3,8 @@ $adl_settings = self::get_general_settings();
 
 $options = array(
 	'days'   => __( 'Day(s)', 'auto-delete-wp-job-openings' ),
-	'months' => __( 'Months(s)', 'auto-delete-wp-job-openings' ),
-	'years'  => __( 'Years(s)', 'auto-delete-wp-job-openings' ),
+	'months' => __( 'Month(s)', 'auto-delete-wp-job-openings' ),
+	'years'  => __( 'Year(s)', 'auto-delete-wp-job-openings' ),
 );
 
 ?>
