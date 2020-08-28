@@ -165,7 +165,7 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 				'label'       => __( 'Auto delete applications ', 'auto-delete-wp-job-openings' ),
 				'type'        => 'raw',
 				'value'       => $field_content,
-				'description' => __( 'CAUTION: Checking this option will delete applications after the selected time period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day on wards automatically).', 'auto-delete-wp-job-openings' ),
+				'description' => __( 'CAUTION: Checking this option will delete applications after the selected period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day onwards automatically).', 'auto-delete-wp-job-openings' ),
 			);
 		return $settings_fields;
 	}

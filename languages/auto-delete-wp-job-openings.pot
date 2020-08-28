@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-28T17:05:59+00:00\n"
+"POT-Creation-Date: 2020-08-28T17:24:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: auto-delete-wp-job-openings\n"
@@ -62,7 +62,7 @@ msgid "Auto delete applications "
 msgstr ""
 
 #: auto-delete.php:168
-msgid "CAUTION: Checking this option will delete applications after the selected time period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day on wards automatically)."
+msgid "CAUTION: Checking this option will delete applications after the selected period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day onwards automatically)."
 msgstr ""
 
 #: inc/remove-applications.php:5
