@@ -39,6 +39,8 @@ if ( ! defined( 'AWSM_JOBS_ADL_PLUGIN_BASENAME' ) ) {
 class AWSM_Job_Openings_Auto_Delete_Addon {
 	private static $instance = null;
 
+	protected $cpath = null;
+
 	public function __construct() {
 		$this->cpath = untrailingslashit( plugin_dir_path( __FILE__ ) );
 		add_action( 'init', array( $this, 'cron_jobs' ) );
