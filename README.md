@@ -42,5 +42,8 @@ The plugin is designed to safeguard the personal information and data of the job
 
 ## Changelog
 
+**V 1.0.1 - 2024-02-06**
+* Minor bug fixes and code improvements.
+
 **V 1.0.0 - 2020-08-14**
 * Initial Release.
