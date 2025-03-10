@@ -259,17 +259,20 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 	}
 
 	public function delete_applications( $options ) {
-		$args = apply_filters( 'awsm_jobs_adl_query_args', array(
-			'fields'         => 'ids',
-			'post_status'    => array( 'publish', 'private', 'trash', 'progress', 'shortlist', 'reject', 'select' ),
-			'posts_per_page' => -1,
-			'date_query'     => array(
-				array(
-					'column' => 'post_date_gmt',
-					'before' => sanitize_text_field( $options['count'] . ' ' . $options['period'] . ' ago' ),
+		$args = apply_filters(
+			'awsm_jobs_adl_query_args',
+			array(
+				'fields'         => 'ids',
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'date_query'     => array(
+					array(
+						'column' => 'post_date_gmt',
+						'before' => sanitize_text_field( $options['count'] . ' ' . $options['period'] . ' ago' ),
+					),
 				),
-			),
-		) );
+			)
+		);
 
 		$args['post_type'] = 'awsm_job_application';
 
