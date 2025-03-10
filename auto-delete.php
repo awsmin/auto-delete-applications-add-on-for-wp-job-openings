@@ -11,7 +11,7 @@
  * Description: This is an add-on for WP Job Openings Plugin, which will let you delete the received applications periodically.
  * Author: AWSM Innovations
  * Author URI: https://awsm.in/
- * Version: 1.0.1
+ * Version: 1.0.2
  * License: GPLv2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text domain: auto-delete-wp-job-openings
