@@ -2,7 +2,7 @@
 **Contributors:** awsmin  
 **Tags:** jobs, job listing, job openings, job board, careers page, jobs page, wp job opening, jobs plugin  
 **Requires at least:** 4.5  
-**Tested up to:** 5.5  
+**Tested up to:** 6.7.2  
 **Requires PHP:** 5.6  
 **Stable tag:** trunk  
 **License:** GPLv2 or later  
@@ -41,6 +41,10 @@ The plugin is designed to safeguard the personal information and data of the job
 2. Activate the plugin through the `Plugins` screen in WordPress.
 
 ## Changelog
+
+**V 1.0.2 - 2025-03-10**
+* Fixed: Issue where applications with custom statuses were not being deleted.
+* Minor bug fixes and code improvements.
 
 **V 1.0.1 - 2024-02-06**
 * Minor bug fixes and code improvements.
