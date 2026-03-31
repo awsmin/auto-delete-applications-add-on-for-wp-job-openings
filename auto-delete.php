@@ -1,14 +1,14 @@
 <?php
 /**
- * Add-on for WP Job Openings for automatically deleting applications based on the specified time.
+ * Add-on for Hirezoot for automatically deleting applications based on the specified time.
  *
  * @package wp-job-openings
  */
 
 /**
- * Plugin Name: Auto Delete Applications - Add-on for WP Job Openings
+ * Plugin Name: Auto Delete Applications - Add-on for Hirezoot
  * Plugin URI: https://wpjobopenings.com/
- * Description: This is an add-on for WP Job Openings Plugin, which will let you delete the received applications periodically.
+ * Description: This is an add-on for Hirezoot Plugin, which will let you delete the received applications periodically.
  * Author: AWSM Innovations
  * Author URI: https://awsm.in/
  * Version: 1.0.3
