@@ -43,6 +43,9 @@ Requires:
 
 == Changelog ==
 
+= V 1.0.4 - 2026-03-31 =
+* Minor bug fixes and code improvements.
+
 = V 1.0.3 - 2026-02-09 =
 * Minor bug fixes and code improvements.
 
