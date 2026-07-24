@@ -1,8 +1,8 @@
-# Auto Delete Applications - Add-on for WP Job Openings
+# Auto Delete Applications - Add-on for HireZoot
 **Contributors:** awsmin  
 **Tags:** jobs, job listing, job openings, job board, careers page, jobs page, wp job opening, jobs plugin  
 **Requires at least:** 4.5  
-**Tested up to:** 6.9.1  
+**Tested up to:** 7.0.2  
 **Requires PHP:** 5.6  
 **Stable tag:** trunk  
 **License:** GPLv2 or later  
@@ -11,19 +11,19 @@
 
 ## Summary
 
-This is essentially an add-on for WP Job Openings plugin. It will auto-delete all applications and related information (for example, resume, other files from WP Job Openings Pro) and keep only the needed info up to a certain period based on the plugin settings.
+This is essentially an add-on for HireZoot plugin. It will auto-delete all applications and related information (for example, resume, other files from HireZoot Pro) and keep only the needed info up to a certain period based on the plugin settings.
 
 ## Description
 
-This is an add-on for WP Job Openings Plugin, which will let you delete the received applications periodically. The plugin will let you specify a time for deletion. Once the feature is activated, job applications after the selected time period from the date of application will be deleted automatically from your website.
+This is an add-on for HireZoot Plugin, which will let you delete the received applications periodically. The plugin will let you specify a time for deletion. Once the feature is activated, job applications after the selected time period from the date of application will be deleted automatically from your website.
 
-The plugin is designed to safeguard the personal information and data of the job applicants. The option that enables auto delete applications will be available in the WP Job Openings plugin's general settings page.
+The plugin is designed to safeguard the personal information and data of the job applicants. The option that enables auto delete applications will be available in the HireZoot plugin's general settings page.
 
-**[WP Job Openings Demo](https://demo.awsm.in/wp-job-openings/)**
+**[HireZoot Demo](https://demo.hirezoot.com/)**
 
-**[Visit website - wpjobopenings.com](https://wpjobopenings.com/)**
+**[Visit website - HireZoot.com ](https://hirezoot.com/)**
 
-**Requires:** [WP Job Openings](https://wordpress.org/plugins/wp-job-openings/) 1.4+
+**Requires:** [HireZoot](https://wordpress.org/plugins/wp-job-openings/) 1.4+
 
 ## Key Features
 
@@ -32,8 +32,9 @@ The plugin is designed to safeguard the personal information and data of the job
 
 ## Other Add-ons
 
-* [Docs Viewer](https://wordpress.org/plugins/docs-viewer-add-on-for-wp-job-openings/)
-* [PRO Pack](https://awsm.in/get/wpjo-pro/)
+* [PRO Pack (PREMIUM)](https://hirezoot.com/addons/pro-pack/)
+* [User Access Control (PREMIUM)](https://hirezoot.com/addons/user-access-control-ad/)
+* [Job Alerts (PREMIUM)](https://hirezoot.com/addons/job-alerts-add-on/)
 
 ## Installation
 
@@ -41,6 +42,9 @@ The plugin is designed to safeguard the personal information and data of the job
 2. Activate the plugin through the `Plugins` screen in WordPress.
 
 ## Changelog
+
+**V 1.0.5 - 2026-07-24**
+* Minor bug fixes and code improvements.
 
 **V 1.0.4 - 2026-03-31**
 * Minor bug fixes and code improvements.
