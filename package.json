@@ -1,8 +1,8 @@
 {
   "name": "auto-delete-wp-job-openings",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
-  "description": "This is an add-on for WP Job Openings Plugin, which will let you delete the received applications periodically.",
+  "description": "This is an add-on for HireZoot Plugin, which will let you delete the received applications periodically.",
   "scripts": {
     "translate": "cross-env wp i18n make-pot . languages/auto-delete-wp-job-openings.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://awsm.in/support\", \"Language-Team\":\"Awsm Innovations <hello@awsm.in>\"}'",
     "archive": "cross-env git archive --format=zip --prefix=auto-delete-wp-job-openings/ --output=./build/auto-delete-wp-job-openings.zip --worktree-attributes master",

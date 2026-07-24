@@ -11,7 +11,7 @@
  * Description: This is an add-on for Hirezoot Plugin, which will let you delete the received applications periodically.
  * Author: AWSM Innovations
  * Author URI: https://awsm.in/
- * Version: 1.0.4
+ * Version: 1.0.5
  * License: GPLv2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text domain: auto-delete-wp-job-openings
@@ -141,8 +141,8 @@ class AWSM_Job_Openings_Auto_Delete_Addon {
 		<div class="updated error">
 				<p>
 					<?php
-						$req_plugin = sprintf( '<strong>"%s"</strong>', esc_html__( 'WP Job Openings', 'wp-job-openings' ) );
-						$plugin     = sprintf( '<strong>"%s"</strong>', esc_html__( 'Auto Delete Applications - Add-on for WP Job Openings', 'auto-delete-wp-job-openings' ) );
+						$req_plugin = sprintf( '<strong>"%s"</strong>', esc_html__( 'HireZoot', 'wp-job-openings' ) );
+						$plugin     = sprintf( '<strong>"%s"</strong>', esc_html__( 'Auto Delete Applications - Add-on for HireZoot', 'auto-delete-wp-job-openings' ) );
 					if ( $is_default ) {
 						/* translators: %1$s: main plugin, %2$s: current plugin, %3$s: plugin activation link, %4$s: line break */
 						printf( esc_html__( 'The plugin %2$s needs the plugin %1$s active. %4$s Please %3$s %1$s', 'auto-delete-wp-job-openings' ), $req_plugin, $plugin, $this->get_main_plugin_activation_link(), '<br />' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
