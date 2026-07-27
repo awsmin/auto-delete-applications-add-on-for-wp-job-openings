@@ -5,8 +5,8 @@
   "description": "This is an add-on for HireZoot Plugin, which will let you delete the received applications periodically.",
   "scripts": {
     "translate": "cross-env wp i18n make-pot . languages/auto-delete-wp-job-openings.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://awsm.in/support\", \"Language-Team\":\"Awsm Innovations <hello@awsm.in>\"}'",
-    "archive": "cross-env git archive --format=zip --prefix=auto-delete-wp-job-openings/ --output=./build/auto-delete-wp-job-openings.zip --worktree-attributes master",
-    "dev-archive": "cross-env git archive --format=zip --prefix=auto-delete-wp-job-openings/ --output=./build/auto-delete-wp-job-openings.zip --worktree-attributes dev-branch"
+    "archive": "cross-env git archive --format=zip --prefix=auto-delete-applications-add-on-for-wp-job-openings/ --output=./build/auto-delete-applications-add-on-for-wp-job-openings.zip --worktree-attributes master",
+    "dev-archive": "cross-env git archive --format=zip --prefix=auto-delete-applications-add-on-for-wp-job-openings/ --output=./build/auto-delete-applications-add-on-for-wp-job-openings.zip --worktree-attributes dev-branch"
   },
   "keywords": [
     "wordpress",

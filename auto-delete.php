@@ -7,7 +7,7 @@
 
 /**
  * Plugin Name: Auto Delete Applications - Add-on for Hirezoot
- * Plugin URI: https://wpjobopenings.com/
+ * Plugin URI: https://hirezoot.com/
  * Description: This is an add-on for Hirezoot Plugin, which will let you delete the received applications periodically.
  * Author: AWSM Innovations
  * Author URI: https://awsm.in/
