@@ -36,6 +36,10 @@ if ( ! defined( 'AWSM_JOBS_ADL_PLUGIN_BASENAME' ) ) {
 	define( 'AWSM_JOBS_ADL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 }
 
+if ( class_exists( 'AWSM_Job_Openings_Auto_Delete_Addon' ) ) {
+	return;
+}
+
 class AWSM_Job_Openings_Auto_Delete_Addon {
 	private static $instance = null;
 
