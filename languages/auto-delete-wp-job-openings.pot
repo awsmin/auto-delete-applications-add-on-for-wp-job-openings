@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-27T05:34:28+00:00\n"
+"POT-Creation-Date: 2026-07-27T06:01:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: auto-delete-wp-job-openings\n"
@@ -19,7 +19,7 @@ msgid "Auto Delete Applications - Add-on for Hirezoot"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://wpjobopenings.com/"
+msgid "https://hirezoot.com/"
 msgstr ""
 
 #. Description of the plugin
@@ -34,37 +34,37 @@ msgstr ""
 msgid "https://awsm.in/"
 msgstr ""
 
-#: auto-delete.php:116
+#: auto-delete.php:114
 msgid "Activate"
 msgstr ""
 
-#: auto-delete.php:126
+#: auto-delete.php:124
 msgid "Install"
 msgstr ""
 
-#: auto-delete.php:133
+#: auto-delete.php:131
 msgid "Update"
 msgstr ""
 
-#: auto-delete.php:149
+#: auto-delete.php:147
 msgid "Auto Delete Applications - Add-on for HireZoot"
 msgstr ""
 
 #. translators: %1$s: main plugin, %2$s: current plugin, %3$s: plugin activation link, %4$s: line break
-#: auto-delete.php:152
+#: auto-delete.php:150
 msgid "The plugin %2$s needs the plugin %1$s active. %4$s Please %3$s %1$s"
 msgstr ""
 
 #. translators: %1$s: main plugin, %2$s: current plugin, %3$s: minimum required version of the main plugin, %4$s: plugin updation link
-#: auto-delete.php:155
+#: auto-delete.php:153
 msgid "%2$s plugin requires %1$s version %3$s. Please %4$s %1$s plugin to the latest version."
 msgstr ""
 
-#: auto-delete.php:171
+#: auto-delete.php:169
 msgid "Auto delete applications "
 msgstr ""
 
-#: auto-delete.php:174
+#: auto-delete.php:172
 msgid "CAUTION: Checking this option will delete applications after the selected period from the date of application. (For example, if you configure the option for 6 months, all the applications you have received before 6 months will be deleted immediately and every application that completes 6 months will be deleted from next day onwards automatically)."
 msgstr ""
 
